@@ -150,7 +150,8 @@ def main() -> int:
         "vc_tools_version": env.get("VCToolsVersion"),
         "windows_sdk_version": env.get("WindowsSDKVersion", "").strip("\\"),
         "commit": os.environ.get("DSL_COMMIT"),
-        "build": f"{os.environ.get('DSL_VERSION')}.{os.environ.get('DSL_BUILD_NUMBER')}",
+        "version": os.environ.get("DSL_VERSION"),  # absent on an unversioned branch
+        "build_number": os.environ.get("DSL_BUILD_NUMBER"),
         "seconds": round(time.monotonic() - T0, 1),
     }
     deps.write_json(plugin_dst / deps.MANIFEST_NAME, manifest)

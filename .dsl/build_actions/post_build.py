@@ -63,7 +63,8 @@ def main() -> int:
         "missing_assets": missing_assets,
         "prebuild_manifest": prebuild,
         "commit": os.environ.get("DSL_COMMIT"),
-        "build": f"{os.environ.get('DSL_VERSION')}.{os.environ.get('DSL_BUILD_NUMBER')}",
+        "version": os.environ.get("DSL_VERSION"),  # absent on an unversioned branch
+        "build_number": os.environ.get("DSL_BUILD_NUMBER"),
     }
     deps.write_json(output / "dsl_airsim_verification.json", report)
 
