@@ -58,16 +58,19 @@ PROJECT_REL = Path("Unreal") / "Environments" / "Blocks"
 UPROJECT = "Blocks.uproject"
 MANIFEST_NAME = "dsl_airsim_prebuild.json"
 
-# What the packaged Win64 game must contain (post_build). Each needle is a
-# string literal compiled into the monolithic game executable from ONE of the
-# three pieces pre_build supplies, so finding all three proves the plugin
-# module, the prebuilt AirLib and the prebuilt rpclib were linked in.
+# What the packaged Win64 game must contain (post_build): string literals
+# compiled into the monolithic game executable. The plugin module's TEXT()
+# literal proves the AirSim module was built into the game; the API name
+# proves AirLib's RPC server (AirLib.lib, built by pre_build) was linked; the
+# rpclib dispatcher literal proves rpclib code is in. (rpclib is header-heavy,
+# so that literal is also inlined into AirLib.lib; the prebuilt rpc.lib and
+# MavLinkCom.lib are on the plugin's link line, so a link without them fails.)
 EXE_NEEDLES = {
     # AirSim plugin module source (TEXT() -> UTF-16 on Windows)
     "airsim_plugin": "Warning, WeatherAPI got invalid paramname!".encode("utf-16-le"),
     # AirLib.lib (RpcLibServerBase.cpp binds this API name)
     "airlib": b"simTestLineOfSightBetweenPoints",
-    # rpc.lib (rpclib dispatcher)
+    # rpclib dispatcher
     "rpclib": b"Function name already bound: '",
 }
 # Cooked into the paks from Plugins/AirSim/Content/VehicleAdv/SUV (the car

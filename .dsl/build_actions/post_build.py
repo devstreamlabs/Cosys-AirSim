@@ -3,10 +3,10 @@
 Runs after the Unreal package step, before it is archived. Fails the build
 unless the packaged output (DSL_OUTPUT_DIR) has:
 
-* the game executable with code from all three pieces pre_build supplied --
-  the AirSim plugin module, the prebuilt AirLib.lib and the prebuilt rpc.lib
-  (a monolithic packaged game links the plugin into the executable, so each is
-  proven by a string literal only that piece contains);
+* the game executable with the AirSim plugin module, AirLib's RPC server and
+  rpclib linked in (a monolithic packaged game links the plugin into the
+  executable, so each is proven by a string literal from it -- see
+  airsim_deps.EXE_NEEDLES);
 * the high-poly SUV car assets (VehicleAdv/SUV, from the external zip) cooked
   into the game's paks.
 

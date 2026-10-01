@@ -37,8 +37,9 @@ upstream `build.cmd` + `update_from_git.bat` do, Release only:
 
 `post_build.py` fails the build unless the packaged game in `DSL_OUTPUT_DIR`
 
-- has a `Blocks.exe` under `Binaries/Win64` containing code from the AirSim plugin module, the
-  prebuilt `AirLib.lib` and the prebuilt `rpc.lib` (one distinctive string literal each), and
+- has a `Blocks.exe` under `Binaries/Win64` with the AirSim plugin module, AirLib's RPC server
+  and rpclib linked in (one distinctive string literal each; the prebuilt `rpc.lib` and
+  `MavLinkCom.lib` are on the plugin's link line, so the link itself fails without them), and
 - has the SUV car assets (`SuvCarPawn`, `Suv_Skel`) cooked into its paks.
 
 It writes `dsl_airsim_verification.json` into the output, so the result ships in the archive.
